@@ -3,252 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freya's All-In-One Hub</title>
+    <title>Freya's Nexus Hub</title>
     <style>
-        /* Modern Reset & Fluid Physics Variables */
+        /* Base Setup & Fluid Layout Mechanics */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            scroll-behavior: smooth;
         }
 
         :root {
-            /* Luxury Color Palette */
-            --bg-deep: #050814;
+            --bg-base: #040817;
             --pink-neon: #ff2a85;
             --gold-bright: #f3b043;
-            --blue-glow: #00f0ff;
+            --blue-electric: #00f0ff;
             --text-pure: #ffffff;
-            --text-dim: #94a3b8;
-            
-            /* High-End Glass Effects */
-            --glass-bg: rgba(255, 255, 255, 0.02);
+            --text-dim: #64748b;
+            --glass-panel: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 255, 255, 0.05);
-            --glass-speed: cubic-bezier(0.2, 0.8, 0.2, 1);
+            --transition-fluid: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body {
-            background-color: var(--bg-deep);
+            background-color: var(--bg-base);
             color: var(--text-pure);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Fluid Glow Background Orbs */
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(160px);
+            opacity: 0.18;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .orb-1 { top: -20%; left: -10%; width: 600px; height: 600px; background: var(--pink-neon); }
+        .orb-2 { bottom: -20%; right: -10%; width: 700px; height: 700px; background: var(--gold-bright); }
+
+        /* Premium Curved Pill Top Navigation Bar */
+        .top-navbar {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 17, 40, 0.4);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 8px 12px;
+            border-radius: 100px; /* Forces the capsule/circle edge design */
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-tab {
+            color: var(--text-pure);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 10px 24px;
+            border-radius: 100px; /* Matching pill tabs */
+            transition: var(--transition-fluid);
+            letter-spacing: 0.3px;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--blue-electric);
+        }
+
+        /* Active tab state showcasing pink-to-gold premium gradient */
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--pink-neon), var(--gold-bright));
+            color: var(--bg-base);
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 42, 133, 0.3);
+        }
+
+        /* Structural Content Layout segments */
+        section {
             min-height: 100vh;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow-x: hidden;
-            padding: 3rem 1.5rem;
+            padding: 120px 2rem 60px 2rem;
             position: relative;
-        }
-
-        /* Ambient Dynamic Light Orbs */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(140px);
-            opacity: 0.25;
-            z-index: 0;
-            pointer-events: none;
-            animation: drift 20s infinite alternate ease-in-out;
-        }
-        .orb-pink {
-            top: -10%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: var(--pink-neon);
-        }
-        .orb-gold {
-            bottom: -15%;
-            left: -10%;
-            width: 600px;
-            height: 600px;
-            background: var(--gold-bright);
-            animation-delay: -5s;
-        }
-
-        /* Layout Container */
-        .hub-wrapper {
-            width: 100%;
-            max-width: 1100px;
             z-index: 1;
         }
 
-        /* Animated Typography Header */
-        header {
+        /* --- SECTION 1: HOMEPAGE INTRO --- */
+        .hero-center {
             text-align: center;
-            margin-bottom: 4.5rem;
+            max-width: 800px;
         }
 
-        header h1 {
-            font-size: 3.5rem;
+        .hero-center h1 {
+            font-size: 4rem;
             font-weight: 900;
-            letter-spacing: -1.5px;
-            margin-bottom: 0.75rem;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
             line-height: 1.1;
         }
 
-        /* Premium multi-stop gradient for your signature branding */
-        .gradient-text {
-            background: linear-gradient(135deg, var(--pink-neon) 0%, #d946ef 40%, var(--gold-bright) 100%);
+        .gradient-brand {
+            background: linear-gradient(135deg, var(--pink-neon) 0%, #d946ef 50%, var(--gold-bright) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            position: relative;
         }
 
-        header p {
+        .hero-center p {
             color: var(--text-dim);
-            font-size: 1.15rem;
-            font-weight: 400;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Central Redirect Portal Button */
+        .directory-launcher {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--glass-panel);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 18px 36px;
+            border-radius: 100px;
+            color: var(--text-pure);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
             letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-fluid);
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
         }
 
-        /* Clean Dashboard Grid */
-        .dashboard-grid {
+        .directory-launcher:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--pink-neon);
+            box-shadow: 0 15px 30px rgba(255, 42, 133, 0.15), 0 0 20px rgba(243, 176, 67, 0.1);
+        }
+
+        .directory-launcher span {
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .directory-launcher:hover span {
+            transform: translateY(4px);
+        }
+
+        /* --- SECTION 2: THE INFINITE DIRECTORY --- */
+        #directory {
+            background: rgba(3, 5, 13, 0.6);
+            backdrop-filter: blur(40px);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        /* Horizontal/Vertical Smooth Scroll Panel container */
+        .subject-scroller {
+            width: 100%;
+            max-width: 1200px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
+            padding: 10px;
         }
 
-        /* Next-Gen Glassmorphic Card Engine */
-        .card {
-            background: var(--glass-bg);
+        /* High-Tier Directory Subject Layout Block */
+        .subject-panel {
+            background: var(--glass-panel);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 3rem 2.5rem;
-            text-decoration: none;
-            color: var(--text-pure);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: 
-                transform 0.5s var(--glass-speed), 
-                background-color 0.5s var(--glass-speed), 
-                border-color 0.5s var(--glass-speed),
-                box-shadow 0.5s var(--glass-speed);
+            padding: 2.5rem;
             position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            transition: var(--transition-fluid);
         }
 
-        /* Seamless Active Glow Edge Overlay */
-        .card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 24px;
-            padding: 1.5px;
-            background: linear-gradient(135deg, var(--pink-neon), var(--gold-bright));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.5s var(--glass-speed);
-        }
-
-        /* Hover Mechanics */
-        .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            background: rgba(255, 255, 255, 0.05);
+        .subject-panel:hover {
             border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.4),
-                0 0 50px rgba(255, 42, 133, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-6px);
         }
 
-        .card:hover::after {
-            opacity: 1;
-        }
-
-        /* High-Definition Icon Spaces */
-        .icon-container {
-            width: 65px;
-            height: 65px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
-            transition: transform 0.6s var(--glass-speed), background 0.5s ease;
-        }
-
-        .card:hover .icon-container {
-            transform: scale(1.15) rotate(-8deg);
-            background: linear-gradient(135deg, var(--pink-neon), var(--gold-bright));
-            border-color: transparent;
-        }
-
-        /* Typography & Visual Details */
-        .card h3 {
-            font-size: 1.4rem;
+        .subject-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: -0.3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge-chat { background: rgba(0, 240, 255, 0.1); color: var(--blue-electric); }
+        .badge-apps { background: rgba(255, 42, 133, 0.1); color: var(--pink-neon); }
+        .badge-vault { background: rgba(243, 176, 67, 0.1); color: var(--gold-bright); }
+
+        .subject-panel h3 {
+            font-size: 1.5rem;
             margin-bottom: 0.75rem;
-            transition: color 0.3s ease;
         }
 
-        .card:hover h3 {
-            color: var(--gold-bright);
-        }
-
-        .card p {
-            color: var(--text-dim);
+        .subject-panel p {
+            color: #94a3b8;
             font-size: 0.95rem;
             line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
-        /* Background Drift Animation Physics */
-        @keyframes drift {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, 30px) scale(1.1); }
+        /* Preview elements simulating real actions */
+        .mock-chat-box {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.03);
         }
 
-        /* Responsive Layout Optimization */
+        .chat-line { margin-bottom: 6px; color: #cbd5e1; }
+        .chat-line span { color: var(--blue-electric); font-weight: 600; }
+
+        /* Status indicators for upcoming products */
+        .app-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gold-bright);
+        }
+        
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gold-bright);
+            border-radius: 50%;
+            animation: blink 1.5s infinite ease-in-out;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
         @media (max-width: 768px) {
-            header h1 { font-size: 2.5rem; }
-            body { padding: 2rem 1rem; }
-            .card { padding: 2rem; }
+            .top-navbar { width: 90%; justify-content: center; }
+            .nav-tab { padding: 8px 16px; font-size: 0.85rem; }
+            .hero-center h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Ambient Floating Visual Layers -->
-    <div class="orb orb-pink"></div>
-    <div class="orb orb-gold"></div>
+    <!-- Ambient Visual Environment Background layers -->
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
 
-    <div class="hub-wrapper">
-        <header>
-            <h1><span class="gradient-text">Freya's</span> All-In-One Hub</h1>
-            <p>A beautifully curated workspace for creative ideas and digital assets</p>
-        </header>
+    <!-- Capsule Nav Bar at Top -->
+    <nav class="top-navbar">
+        <a href="#home" class="nav-tab active">Home</a>
+        <a href="#directory" class="nav-tab">Directory</a>
+        <a href="#about" class="nav-tab">About Hub</a>
+    </nav>
 
-        <main class="dashboard-grid">
-            <!-- App Card 1 -->
-            <a href="#" class="card">
-                <div class="icon-container">🔮</div>
-                <h3>Project Space</h3>
-                <p>Manage your daily progress, clean creative logs, and dynamic web blueprints.</p>
+    <!-- SECTION 1: HOMEPAGE START -->
+    <section id="home">
+        <div class="hero-center">
+            <h1>Welcome to <span class="gradient-brand">Freya's</span> Nexus</h1>
+            <p>An experimental, high-performance web platform designed to host custom utilities, active asset libraries, and open channel communications.</p>
+            
+            <!-- Central Redirect Module -->
+            <a href="#directory" class="directory-launcher">
+                Explore Hub Directory <span>↓</span>
             </a>
+        </div>
+    </section>
 
-            <!-- App Card 2 -->
-            <a href="#" class="card">
-                <div class="icon-container">💎</div>
-                <h3>Media Gallery</h3>
-                <p>Curate custom artwork, visual aesthetics, and soundscapes in one localized stream.</p>
-            </a>
-
-            <!-- App Card 3 -->
-            <a href="#" class="card">
-                <div class="icon-container">⚡</div>
-                <h3>Custom Tools</h3>
-                <p>Access high-performance micro-utilities and custom built-in productivity engines.</p>
-            </a>
-        </main>
-    </div>
-
-</body>
-</html>
+    <!-- SECTION 2: THE SUBJECTS & APP DIRECTORY -->
+    <section id="directory">
+        <h2 class="section-title">Central Hub Directory</h2>
+        
+        <div class="subject-scroller">
+            
+            <!-- Subject Column 1: Chat Network -->
+            <div class="subject-panel">
+                <div class="subject-badge badge-chat">Network Channel</div>
+                <h3>Community Chats</h3>
