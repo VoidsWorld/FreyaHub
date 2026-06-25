@@ -1,305 +1,1064 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freya's Nexus Hub</title>
-    <style>
-        /* Base Reset & Core Fluid Variables */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            scroll-behavior: smooth;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freya's Nexus Hub</title>
+  <style>
+    /* ── RESET & BASE ────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        :root {
-            --bg-base: #020617;
-            --blue-neon: #00f0ff;
-            --blue-deep: #1d4ed8;
-            --blue-dark: #0f172a;
-            --text-pure: #ffffff;
-            --text-dim: #94a3b8;
-            --glass-panel: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.05);
-            --transition-fluid: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+    :root {
+      --bg-deep:       #020617;
+      --bg-mid:        #050d20;
+      --glass-bg:      rgba(6, 18, 44, 0.55);
+      --glass-border:  rgba(0, 240, 255, 0.12);
+      --glass-shine:   rgba(0, 240, 255, 0.06);
+      --cyan:          #00f0ff;
+      --cyan-dim:      rgba(0, 240, 255, 0.18);
+      --cyan-glow:     rgba(0, 240, 255, 0.35);
+      --sapphire:      #1d4ed8;
+      --sapphire-mid:  #2563eb;
+      --text-primary:  #e8f4ff;
+      --text-secondary:#7ea8c9;
+      --text-dim:      #3a5a78;
+      --upcoming-bg:   rgba(29, 78, 216, 0.15);
+      --upcoming-border: rgba(29, 78, 216, 0.45);
+      --radius-lg:     18px;
+      --radius-md:     12px;
+      --radius-sm:     8px;
+      --blur-glass:    blur(22px);
+      --blur-glow:     blur(80px);
+      --transition:    cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
 
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-pure);
-            overflow-x: hidden;
-            position: relative;
-        }
+    html { scroll-behavior: smooth; }
 
-        /* Ambient Fluid Glow Background Layers */
-        .ambient-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(150px);
-            opacity: 0.15;
-            z-index: 0;
-            pointer-events: none;
-        }
-        .orb-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: var(--blue-neon); }
-        .orb-2 { bottom: -10%; right: -10%; width: 600px; height: 600px; background: var(--blue-deep); }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        /* Premium Capsule Top Navigation Bar */
-        .top-navbar {
-            position: fixed;
-            top: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            padding: 8px 12px;
-            border-radius: 100px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 1000;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        }
+    /* ── AMBIENT BACKGROUND ORBS ────────────────────────────────── */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: var(--blur-glow);
+      opacity: 0.28;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #00f0ff 0%, transparent 70%);
+      top: -180px; left: -160px;
+      animation-duration: 22s;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #1d4ed8 0%, transparent 70%);
+      top: 30%; right: -140px;
+      animation-duration: 18s;
+      animation-delay: -6s;
+    }
+    .orb-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #0ea5e9 0%, transparent 70%);
+      bottom: -100px; left: 40%;
+      animation-duration: 26s;
+      animation-delay: -12s;
+    }
+    @keyframes drift {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(40px, 30px) scale(1.06); }
+      100% { transform: translate(-20px, 50px) scale(0.96); }
+    }
 
-        .nav-tab {
-            color: var(--text-pure);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 10px 24px;
-            border-radius: 100px;
-            transition: var(--transition-fluid);
-        }
+    /* ── SCANLINE TEXTURE OVERLAY ───────────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 240, 255, 0.012) 2px,
+        rgba(0, 240, 255, 0.012) 4px
+      );
+    }
 
-        .nav-tab:hover { color: var(--blue-neon); }
-        .nav-tab.active {
-            background: linear-gradient(135deg, var(--blue-neon), var(--blue-deep));
-            color: #ffffff;
-            font-weight: 600;
-        }
+    /* ── LAYOUT WRAPPER ─────────────────────────────────────────── */
+    .site-wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
 
-        .audio-widget {
-            display: flex;
-            align-items: center;
-            padding-left: 12px;
-            border-left: 1px solid var(--glass-border);
-            margin-left: 4px;
-        }
+    /* ── NAV ────────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 18px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--glass-border);
+      background: rgba(2, 6, 23, 0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--cyan), var(--sapphire));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 800;
+      color: #fff;
+      box-shadow: 0 0 18px var(--cyan-glow);
+    }
+    .logo-text {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+    }
+    .logo-text span { color: var(--cyan); }
 
-        .audio-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            color: var(--text-pure);
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            transition: var(--transition-fluid);
-        }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+    }
+    .nav-links a {
+      display: block;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      letter-spacing: 0.03em;
+      transition: color 0.22s var(--transition),
+                  background 0.22s var(--transition),
+                  border-color 0.22s var(--transition);
+    }
+    .nav-links a:hover {
+      color: var(--cyan);
+      background: var(--cyan-dim);
+      border-color: var(--glass-border);
+    }
+    .nav-cta {
+      padding: 9px 20px !important;
+      background: linear-gradient(135deg, rgba(0,240,255,0.14), rgba(29,78,216,0.2)) !important;
+      border-color: var(--glass-border) !important;
+      color: var(--cyan) !important;
+    }
+    .nav-cta:hover {
+      background: linear-gradient(135deg, rgba(0,240,255,0.25), rgba(29,78,216,0.32)) !important;
+      box-shadow: 0 0 18px var(--cyan-dim);
+    }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      border: none;
+      background: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--text-secondary);
+      border-radius: 2px;
+      transition: all 0.3s var(--transition);
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 73px; left: 0; right: 0;
+      background: rgba(2, 6, 23, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 16px 28px 24px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      display: block;
+      padding: 12px 16px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      transition: color 0.2s, background 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--cyan); background: var(--cyan-dim); }
 
-        /* Layout Structural Grid Segments */
-        section {
-            min-height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 140px 2rem 60px 2rem;
-            position: relative;
-            z-index: 1;
-        }
+    /* ── HERO ───────────────────────────────────────────────────── */
+    .hero {
+      padding: 110px 0 90px;
+      text-align: center;
+      position: relative;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-shine);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 32px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
 
-        .content-container {
-            text-align: center;
-            max-width: 900px;
-            width: 100%;
-        }
+    .hero-headline {
+      font-size: clamp(38px, 7vw, 78px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin-bottom: 24px;
+    }
+    .hero-headline .line-plain { color: var(--text-primary); display: block; }
+    .hero-headline .line-gradient {
+      display: block;
+      background: linear-gradient(90deg, var(--cyan) 0%, #60a5fa 50%, var(--sapphire-mid) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            letter-spacing: -2px;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-        }
+    .hero-sub {
+      max-width: 560px;
+      margin: 0 auto 48px;
+      font-size: clamp(14px, 1.8vw, 17px);
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
 
-        .gradient-blue {
-            background: linear-gradient(135deg, var(--blue-neon) 0%, var(--blue-deep) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 30px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      color: var(--bg-deep);
+      background: linear-gradient(135deg, var(--cyan), #38bdf8);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 28px rgba(0,240,255,0.4), 0 4px 20px rgba(0,0,0,0.4);
+      transition: transform 0.22s var(--transition),
+                  box-shadow 0.22s var(--transition);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 44px rgba(0,240,255,0.55), 0 8px 28px rgba(0,0,0,0.45);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      color: var(--text-primary);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: var(--blur-glass);
+      cursor: pointer;
+      transition: transform 0.22s var(--transition),
+                  background 0.22s var(--transition),
+                  border-color 0.22s var(--transition);
+    }
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      background: rgba(0,240,255,0.08);
+      border-color: var(--cyan-glow);
+    }
 
-        p {
-            color: var(--text-dim);
-            font-size: 1.2rem;
-            margin-bottom: 2.5rem;
-            line-height: 1.7;
-        }
+    /* ── HERO STATS STRIP ───────────────────────────────────────── */
+    .stats-strip {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-top: 72px;
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 32px 0;
+    }
+    .stat-item {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      max-width: 200px;
+    }
+    .stat-item + .stat-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 10%; bottom: 10%;
+      width: 1px;
+      background: var(--glass-border);
+    }
+    .stat-number {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--cyan), #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+    .stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
 
-        .launcher-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--glass-panel);
-            border: 1px solid rgba(0, 240, 255, 0.25);
-            padding: 18px 36px;
-            border-radius: 100px;
-            color: var(--text-pure);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: var(--transition-fluid);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
-        }
+    /* ── SECTION HEADERS ────────────────────────────────────────── */
+    .section-header {
+      margin-bottom: 48px;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      line-height: 1.15;
+    }
+    .section-title span {
+      background: linear-gradient(90deg, var(--cyan), #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-sub {
+      margin-top: 10px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 520px;
+    }
 
-        .launcher-btn:hover {
-            transform: translateY(-3px);
-            border-color: var(--blue-neon);
-            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.2);
-        }
+    /* ── TOOLS SECTION ──────────────────────────────────────────── */
+    .tools-section { padding: 90px 0; }
 
-        /* --- DETAILED DESCRIPTION TEXT SECTION --- */
-        .info-block {
-            text-align: left;
-            background: var(--glass-panel);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 3rem;
-            margin-top: 4rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
 
-        .info-block h2 {
-            font-size: 2rem;
-            margin-bottom: 1.25rem;
-            letter-spacing: -0.5px;
-        }
+    .tool-card {
+      position: relative;
+      padding: 34px 30px 28px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      overflow: hidden;
+      cursor: default;
+      transition: transform 0.3s var(--transition),
+                  border-color 0.3s var(--transition),
+                  box-shadow 0.3s var(--transition);
+    }
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--glass-shine) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .tool-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,240,255,0.28);
+      box-shadow: 0 12px 48px rgba(0,240,255,0.1), 0 4px 16px rgba(0,0,0,0.4);
+    }
 
-        .info-block p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
+    /* Inner glow accent on hover */
+    .tool-card::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,240,255,0.12) 0%, transparent 70%);
+      filter: blur(20px);
+      opacity: 0;
+      transition: opacity 0.4s var(--transition);
+    }
+    .tool-card:hover::after { opacity: 1; }
 
-        /* --- CONSOLIDATED APPLICATIONS GRID --- */
-        .apps-title {
-            margin-top: 5rem;
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 2rem;
-        }
+    .upcoming-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: var(--upcoming-bg);
+      border: 1px solid var(--upcoming-border);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #93c5fd;
+      margin-bottom: 22px;
+    }
+    .upcoming-badge::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #60a5fa;
+      box-shadow: 0 0 6px #60a5fa;
+    }
 
-        .apps-container {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            text-align: left;
-        }
+    .tool-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      border: 1px solid var(--glass-border);
+    }
+    .tool-icon-ac { background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(14,165,233,0.1)); }
+    .tool-icon-ex { background: linear-gradient(135deg, rgba(29,78,216,0.2), rgba(99,102,241,0.15)); }
+    .tool-icon-xe { background: linear-gradient(135deg, rgba(0,240,255,0.12), rgba(29,78,216,0.18)); }
+    .tool-icon-sc { background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(0,240,255,0.1)); }
 
-        .app-card {
-            background: var(--glass-panel);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: var(--transition-fluid);
-        }
+    .tool-name {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .tool-name span { color: var(--cyan); }
 
-        .app-card:hover {
-            border-color: rgba(0, 240, 255, 0.2);
-            background: rgba(255,255,255,0.04);
-            transform: translateY(-5px);
-        }
+    .tool-desc {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 22px;
+    }
 
-        .app-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 700; }
-        .app-card p { font-size: 0.9rem; margin-bottom: 1.5rem; color: var(--text-dim); line-height: 1.5; }
-        
-        .badge-upcoming {
-            display: inline-block;
-            background: rgba(243, 176, 67, 0.1);
-            color: #f3b043;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 50px;
-            text-transform: uppercase;
-            width: max-content;
-        }
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .tool-tag {
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
 
-        /* --- WHO IS FREYA BIOGRAPHY PANEL --- */
-        #about {
-            background: rgba(1, 3, 10, 0.7);
-            border-top: 1px solid var(--glass-border);
-            backdrop-filter: blur(20px);
-        }
+    /* ── DIRECTORY TEASER ───────────────────────────────────────── */
+    .directory-section { padding: 0 0 90px; }
 
-        .about-card-layout {
-            background: var(--glass-panel);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 3.5rem;
-            text-align: left;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-        }
+    .dir-card {
+      position: relative;
+      padding: 56px 52px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(6,18,44,0.8) 0%, rgba(5,15,38,0.9) 100%);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .dir-card-glow {
+      position: absolute;
+      left: -80px; top: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,240,255,0.12) 0%, transparent 70%);
+      filter: blur(40px);
+      pointer-events: none;
+    }
+    .dir-card-glow-r {
+      left: auto; right: -80px; top: auto; bottom: -80px;
+      background: radial-gradient(circle, rgba(29,78,216,0.2) 0%, transparent 70%);
+    }
+    .dir-info { position: relative; flex: 1; }
+    .dir-title {
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .dir-title span {
+      background: linear-gradient(90deg, var(--cyan), #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .dir-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      max-width: 440px;
+      margin-bottom: 28px;
+    }
+    .dir-dept-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .dept-pill {
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-shine);
+      color: var(--text-secondary);
+    }
+    .dept-pill.active { border-color: var(--cyan-glow); color: var(--cyan); background: var(--cyan-dim); }
 
-        .about-card-layout h2 { font-size: 2.5rem; margin-bottom: 1.5rem; letter-spacing: -1px; }
-        .about-card-layout h3 { margin-bottom: 1rem; font-size: 1.4rem; font-weight: 700; }
+    .dir-visual {
+      position: relative;
+      flex-shrink: 0;
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .dir-mini-tab {
+      height: 34px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .dir-mini-tab.lit {
+      border-color: rgba(0,240,255,0.3);
+      background: rgba(0,240,255,0.07);
+      color: var(--cyan);
+    }
+    .dir-mini-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
 
-        /* ==========================================================================
-           ⚡ DISPLAY RESPONSIVE BREAKPOINT CONTROLLERS (Mobile, Desktop, Larger)
-           ========================================================================== */
-        @media (min-width: 1400px) {
-            .content-container { max-width: 1100px; }
-            h1 { font-size: 5rem; }
-        }
+    /* ── ABOUT STRIP ────────────────────────────────────────────── */
+    .about-section { padding: 0 0 90px; }
 
-        @media (max-width: 1200px) and (min-width: 769px) {
-            h1 { font-size: 3.5rem; }
-        }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .about-card {
+      padding: 32px 28px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      transition: transform 0.3s var(--transition), border-color 0.3s;
+    }
+    .about-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0,240,255,0.22);
+    }
+    .about-card-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .about-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .about-card-desc {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
 
-        @media (max-width: 768px) {
-            .top-navbar { width: 92%; justify-content: space-between; padding: 6px 12px; }
-            .nav-tab { padding: 8px 14px; font-size: 0.85rem; }
-            h1 { font-size: 2.6rem; }
-            section { padding: 120px 1rem 40px 1rem; }
-            .info-block, .about-card-layout { padding: 2rem; }
-            .apps-container { grid-template-columns: 1fr; }
-        }
-    </style>
+    /* ── FOOTER ─────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--glass-border);
+      padding: 40px 0;
+      text-align: center;
+    }
+    .footer-logo {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .footer-logo span { color: var(--cyan); }
+    .footer-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      list-style: none;
+      margin-bottom: 28px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cyan); }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-dim);
+      opacity: 0.5;
+    }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s var(--transition), transform 0.65s var(--transition);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE: STANDARD DESKTOP 769–1399px ────────────────── */
+    @media (max-width: 1399px) {
+      .site-wrapper { padding: 0 24px; }
+    }
+
+    /* ── RESPONSIVE: ULTRA-WIDE >=1400px ───────────────────────── */
+    @media (min-width: 1400px) {
+      .site-wrapper { max-width: 1320px; padding: 0 48px; }
+      .hero { padding: 130px 0 110px; }
+      .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 26px; }
+      .tool-card { padding: 40px 36px 34px; }
+      .dir-card { padding: 68px 64px; }
+    }
+
+    /* ── RESPONSIVE: MOBILE <=768px ─────────────────────────────── */
+    @media (max-width: 768px) {
+      .site-wrapper { padding: 0 18px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero { padding: 72px 0 60px; }
+      .stats-strip {
+        gap: 0;
+        flex-wrap: nowrap;
+      }
+      .stat-item { max-width: none; }
+      .tools-grid { grid-template-columns: 1fr; gap: 14px; }
+      .dir-card {
+        flex-direction: column;
+        padding: 34px 24px;
+      }
+      .dir-visual { width: 100%; }
+      .about-grid { grid-template-columns: 1fr; gap: 14px; }
+      .hero-headline { letter-spacing: -0.02em; }
+      .tools-section { padding: 60px 0; }
+      .directory-section { padding: 0 0 60px; }
+      .about-section { padding: 0 0 60px; }
+      .stats-strip { margin-top: 48px; }
+    }
+
+    @media (max-width: 400px) {
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { justify-content: center; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
+  <!-- AMBIENT BACKGROUND -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
 
-    <!-- Circle Nav Header Capsule -->
-    <nav class="top-navbar">
-        <a href="#home" class="nav-tab active">Home</a>
-        <a href="directory.html" class="nav-tab">Directory</a>
-        <a href="#about" class="nav-tab">About</a>
-        <div class="audio-widget">
-            <button class="audio-btn" id="musicToggle" title="Toggle Background Music">▶</button>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-mark">F</div>
+        <span class="logo-text">Freya's <span>Nexus</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="directory.html">Directory</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="directory.html" class="nav-cta">Open Hub →</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#tools">Tools</a>
+    <a href="directory.html">Directory</a>
+    <a href="#about">About</a>
+    <a href="directory.html">Open Hub →</a>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="site-wrapper">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-eyebrow">Platform Online — All Systems Active</div>
+        <h1 class="hero-headline">
+          <span class="line-plain">The All-In-One</span>
+          <span class="line-gradient">Nexus Hub</span>
+        </h1>
+        <p class="hero-sub">
+          A unified platform for frontend utility blueprints, deep academic intelligence, and precision tooling — engineered for those who demand more than defaults.
+        </p>
+        <div class="hero-actions">
+          <a href="directory.html" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            Browse Directory
+          </a>
+          <a href="#tools" class="btn-secondary">
+            View Tooling
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
-    </nav>
 
-    <!-- SECTION 1: HOMEPAGE PLATFORM INTRO -->
-    <section id="home">
-        <div class="content-container">
-            <h1>Welcome to <span class="gradient-blue">Freya's</span> Nexus</h1>
-            <p>A personal front-end development web space designed to store upcoming automation engines, custom development tool scripts, and isolated information databases.</p>
-            
-            <a href="directory.html" class="launcher-btn">Enter Main Subject Directory ➔</a>
+        <!-- STATS -->
+        <div class="stats-strip">
+          <div class="stat-item">
+            <div class="stat-number">100</div>
+            <div class="stat-label">Subjects</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Departments</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">Core Tools</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Possibility</div>
+          </div>
+        </div>
+      </section>
 
-            <!-- Comprehensive System Overview Block -->
-            <div class="info-block">
+      <!-- TOOLS SECTION -->
+      <section class="tools-section reveal" id="tools">
+        <div class="section-header">
+          <div class="section-eyebrow">// Core Tooling Suite</div>
+          <h2 class="section-title">Frontend <span>Utility Blueprints</span></h2>
+          <p class="section-sub">Browser-native development assets exploring the outer limits of client-side scripting — built for precision, not for shortcuts.</p>
+        </div>
+
+        <div class="tools-grid">
+
+          <!-- Auto Clicker -->
+          <div class="tool-card reveal">
+            <div class="upcoming-badge">Upcoming</div>
+            <div class="tool-icon tool-icon-ac">⚡</div>
+            <div class="tool-name">Freya <span>Auto Clicker</span></div>
+            <p class="tool-desc">An automated microsecond macro-loop engine. Executes high-precision, programmable click sequences at sub-millisecond intervals — native browser execution, zero external runtime.</p>
+            <div class="tool-tags">
+              <span class="tool-tag">Macro Engine</span>
+              <span class="tool-tag">Microsecond Loop</span>
+              <span class="tool-tag">Browser-Native</span>
+            </div>
+          </div>
+
+          <!-- External -->
+          <div class="tool-card reveal">
+            <div class="upcoming-badge">Upcoming</div>
+            <div class="tool-icon tool-icon-ex">🔗</div>
+            <div class="tool-name">Freya <span>External</span></div>
+            <p class="tool-desc">An isolated client-side execution script controller. Manages sandboxed script environments with precision state control — keeping your runtime clean and separation absolute.</p>
+            <div class="tool-tags">
+              <span class="tool-tag">Sandboxed Exec</span>
+              <span class="tool-tag">State Control</span>
+              <span class="tool-tag">Client-Side</span>
+            </div>
+          </div>
+
+          <!-- Executor -->
+          <div class="tool-card reveal">
+            <div class="upcoming-badge">Upcoming</div>
+            <div class="tool-icon tool-icon-xe">⚙️</div>
+            <div class="tool-name">Freya <span>Executor</span></div>
+            <p class="tool-desc">A native browser script integration compiler. Binds custom script logic directly into the browser's execution context — seamless, fast, and architecturally clean.</p>
+            <div class="tool-tags">
+              <span class="tool-tag">Script Compiler</span>
+              <span class="tool-tag">Native Integration</span>
+              <span class="tool-tag">Context Binding</span>
+            </div>
+          </div>
+
+          <!-- Scripts -->
+          <div class="tool-card reveal">
+            <div class="upcoming-badge">Upcoming</div>
+            <div class="tool-icon tool-icon-sc">📦</div>
+            <div class="tool-name">Freya's <span>Scripts</span></div>
+            <p class="tool-desc">A curated repository of custom modular code structures. Each script is purpose-built, self-contained, and engineered for direct deployment or extension within your own stack.</p>
+            <div class="tool-tags">
+              <span class="tool-tag">Modular Code</span>
+              <span class="tool-tag">Repository</span>
+              <span class="tool-tag">Plug & Deploy</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- DIRECTORY TEASER -->
+      <section class="directory-section reveal">
+        <div class="dir-card">
+          <div class="dir-card-glow"></div>
+          <div class="dir-card-glow dir-card-glow-r"></div>
+          <div class="dir-info">
+            <div class="section-eyebrow">// Knowledge Matrix</div>
+            <h2 class="dir-title">The <span>100-Subject</span> Directory</h2>
+            <p class="dir-desc">Five departments. One hundred precision-curated subjects. Each tab opens a full contextual knowledge panel and an isolated simulation chat — your personal deep-dive engine for any field.</p>
+            <div class="dir-dept-pills">
+              <span class="dept-pill active">Mathematics</span>
+              <span class="dept-pill">Physical Sciences</span>
+              <span class="dept-pill">Neuroscience</span>
+              <span class="dept-pill">Philosophy</span>
+              <span class="dept-pill">Computer Science</span>
+            </div>
+            <br/>
+            <a href="directory.html" class="btn-primary" style="margin-top:8px; display:inline-flex;">
+              Enter Directory →
+            </a>
+          </div>
+          <div class="dir-visual" aria-hidden="true">
+            <div class="dir-mini-tab lit"><span class="dir-mini-dot"></span>Quantum Mechanics</div>
+            <div class="dir-mini-tab"><span class="dir-mini-dot"></span>Linear Algebra</div>
+            <div class="dir-mini-tab lit"><span class="dir-mini-dot"></span>Neural Networks</div>
+            <div class="dir-mini-tab"><span class="dir-mini-dot"></span>Epistemology</div>
+            <div class="dir-mini-tab"><span class="dir-mini-dot"></span>Astrophysics</div>
+            <div class="dir-mini-tab lit"><span class="dir-mini-dot"></span>Cryptography Math</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT STRIP -->
+      <section class="about-section reveal" id="about">
+        <div class="section-header">
+          <div class="section-eyebrow">// Platform Architecture</div>
+          <h2 class="section-title">Built With <span>Precision</span></h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-card-icon">🔬</div>
+            <div class="about-card-title">Zero Dependencies</div>
+            <p class="about-card-desc">Pure HTML, CSS, and Vanilla JavaScript — no frameworks, no bloat, no build step. Every pixel and interaction is hand-engineered from scratch.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-card-icon">📐</div>
+            <div class="about-card-title">Three-Tier Responsive</div>
+            <p class="about-card-desc">Mobile, standard desktop, and ultra-wide monitor breakpoints. Every layout adapts flawlessly across all viewport widths without compromise.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-card-icon">🌊</div>
+            <div class="about-card-title">True Glassmorphism</div>
+            <p class="about-card-desc">Backdrop blur, translucent hairline borders, ambient glow drops, and cubic-bezier fluid transitions — the real thing, not the template version.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-card-icon">⚡</div>
+            <div class="about-card-title">Modular File Architecture</div>
+            <p class="about-card-desc">Each tool and major content section lives in its own dedicated file, keeping load times fast, code maintainable, and the platform infinitely scalable.</p>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /site-wrapper -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="site-wrapper">
+      <div class="footer-logo">Freya's <span>Nexus Hub</span></div>
+      <div class="footer-sub">All-In-One Platform</div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="directory.html">Directory</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+      <div class="footer-copy">© 2025 Freya's Nexus Hub. Engineered from scratch.</div>
+    </div>
+  </footer>
+
+  <script>
+    // ── MOBILE MENU ──────────────────────────────────────────────
+    const hamburger   = document.getElementById('hamburger');
+    const mobileMenu  = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      const spans = hamburger.querySelectorAll('span');
+      const isOpen = mobileMenu.classList.contains('open');
+      spans[0].style.transform = isOpen ? 'translateY(7px) rotate(45deg)'  : '';
+      spans[1].style.opacity   = isOpen ? '0' : '1';
+      spans[2].style.transform = isOpen ? 'translateY(-7px) rotate(-45deg)' : '';
+    });
+
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        const spans = hamburger.querySelectorAll('span');
+        spans[0].style.transform = '';
+        spans[1].style.opacity   = '1';
+        spans[2].style.transform = '';
+      });
+    });
+
+    // ── SCROLL REVEAL ────────────────────────────────────────────
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 80);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── STAGGERED TOOL CARDS ─────────────────────────────────────
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const cards = entry.target.querySelectorAll('.tool-card.reveal');
+          cards.forEach((card, i) => {
+            setTimeout(() => card.classList.add('visible'), i * 110);
+          });
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    const toolsGrid = document.querySelector('.tools-grid');
+    if (toolsGrid) cardObserver.observe(toolsGrid);
+
+    // ── DIR MINI TABS ANIMATION ───────────────────────────────────
+    const miniTabs = document.querySelectorAll('.dir-mini-tab');
+    let litIndex = [0, 2, 5];
+    setInterval(() => {
+      miniTabs.forEach(t => t.classList.remove('lit'));
+      // rotate one random tab
+      const next = Math.floor(Math.random() * miniTabs.length);
+      litIndex.push(next);
+      if (litIndex.length > 3) litIndex.shift();
+      litIndex.forEach(i => { if (miniTabs[i]) miniTabs[i].classList.add('lit'); });
+    }, 1800);
+  </script>
+</body>
+</html>
