@@ -28,7 +28,7 @@
       --radius-lg:      16px;
       --radius-md:      10px;
       --radius-sm:      7px;
-      --blur-glass:     none;
+      --blur-glass:     blur(20px);
       --nav-h:          64px;
       --sidebar-w:      270px;
       --transition:     cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -163,16 +163,20 @@
 
     /* ── SIDEBAR ───────────────────────────────────────────────── */
     .sidebar {
-      width: var(--sidebar-w);
-      flex-shrink: 0;
-      height: 100%;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      background: rgba(3, 9, 22, 0.85);
-      border-right: 1px solid var(--glass-border);
-      transition: transform 0.35s var(--transition);
-    }
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: rgba(3, 9, 22, 0.95); /* increased opacity */
+  border-right: 1px solid var(--glass-border);
+  transition: transform 0.35s var(--transition);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
 
     .sidebar-search {
       padding: 14px 14px 10px;
@@ -462,7 +466,18 @@
     @keyframes msgIn {
       from { opacity:0; transform:translateY(10px); }
       to   { opacity:1; transform:translateY(0); }
-    }
+    .sidebar {
+  position: fixed;
+  top: var(--nav-h); left: 0;
+  height: calc(100vh - var(--nav-h));
+  transform: translateX(-100%);
+  z-index: 160;
+  box-shadow: 8px 0 40px rgba(0,0,0,0.5);
+  background: var(--bg-panel); /* solid background instead of translucent */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
     .msg.user { flex-direction: row-reverse; }
     .msg-avatar {
       width: 30px; height: 30px; border-radius: 8px;
