@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus Hub Directory</title>
     <style>
-        /* Base Setup & Fluid Layout Mechanics */
+        /* Structural Viewport Reset */
         * {
             margin: 0;
             padding: 0;
@@ -27,14 +27,14 @@
         body {
             background-color: var(--bg-base);
             color: var(--text-pure);
-            padding: 120px 0 0 0;
+            padding: 100px 0 0 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        /* Top Bar Capsule Nav Bar */
+        /* Top Navbar Capsule Styling */
         .top-navbar {
             position: fixed;
             top: 24px;
@@ -64,14 +64,14 @@
         .nav-tab:hover { color: var(--blue-neon); }
         .nav-tab.active { background: linear-gradient(135deg, var(--blue-neon), var(--blue-deep)); color: #fff; }
 
-        /* Split-Screen Sidebar Structural Framework */
+        /* Split Dashboard Layout Wrapper */
         .workspace-split {
             display: flex;
             width: 100%;
-            height: calc(100vh - 120px);
+            height: calc(100vh - 100px);
         }
 
-        /* Left Side-Scroll Rail (100 Tabs) */
+        /* 100 Tab Rail Left Sidebar */
         .sidebar-tabs {
             width: 300px;
             background: rgba(15, 23, 42, 0.2);
@@ -110,7 +110,7 @@
             color: var(--blue-neon);
         }
 
-        /* Right Content Panel Display Space */
+        /* Right Panel Data Workspace Display Screen */
         .display-workspace {
             flex: 1;
             overflow-y: auto;
@@ -143,7 +143,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Custom Isolated Chat Stream Setup per Subject */
+        /* Isolated Topic Chat Architecture per Tab */
         .embedded-chat-module {
             background: #050a18;
             border: 1px solid var(--glass-border);
@@ -198,11 +198,10 @@
             cursor: pointer;
         }
 
-        /* ==========================================
-           ⚡ DISPLAY RESPONSIVE ENGINE BREAKPOINTS 
-           ========================================== */
+        /* ==========================================================================
+           ⚡ HIGH-END BREAKPOINT INTERFACES (Mobile, Desktop, Larger Displays)
+           ========================================================================= */
         @media (min-width: 1400px) {
-            .workspace-split { height: calc(100vh - 120px); }
             .sidebar-tabs { width: 340px; }
             .display-workspace { padding: 5rem; }
         }
@@ -213,7 +212,7 @@
             .nav-tab { padding: 8px 14px; font-size: 0.85rem; }
             .workspace-split { flex-direction: column; height: auto; }
             
-            /* Horizontal swipe rail for mobile screens */
+            /* Horizontal Touch-Swipe Strip for Mobile Screens */
             .sidebar-tabs { width: 100%; height: 75px; flex-direction: row; overflow-x: scroll; overflow-y: hidden; padding: 0.75rem; }
             .side-tab { width: auto; padding: 8px 16px; }
             .display-workspace { padding: 1.5rem; height: auto; }
@@ -229,10 +228,10 @@
     </nav>
 
     <div class="workspace-split">
-        <!-- Generates 100 Custom Sidebar Tabs on the Fly -->
+        <!-- Main mounting point where JavaScript renders the 100 tab list nodes -->
         <div class="sidebar-tabs" id="tabContainer"></div>
 
-        <!-- Explaining Display Workspace -->
+        <!-- System Output Workspace Panel -->
         <div class="display-workspace">
             <div class="subject-header-area">
                 <h2 id="currentSubjectTitle">Loading Node...</h2>
@@ -242,7 +241,7 @@
                 <p id="currentSubjectExplanation" style="margin-bottom:0; color:#cbd5e1; font-size:1.05rem;"></p>
             </div>
 
-            <!-- Custom Room Chat Module -->
+            <!-- Subject Chat Core Interface -->
             <div class="embedded-chat-module">
                 <div class="chat-header-line" id="chatRoomTitle">#channel-lobby</div>
                 <div class="chat-feed-box" id="chatFeed"></div>
@@ -258,7 +257,7 @@
         const baseSubjects = ["Math", "Philosophy", "Neuroscience", "Quantum Physics", "Astronomy", "Computer Science", "Chemistry", "Psychology", "History", "Literature"];
         const subjectList = [];
         
-        // Flawlessly builds exactly 100 research subject modules
+        // Assembles exactly 100 custom research array nodes
         for(let i = 1; i <= 100; i++) {
             const base = baseSubjects[(i - 1) % baseSubjects.length];
             subjectList.push({
