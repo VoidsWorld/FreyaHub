@@ -233,7 +233,7 @@
 
     /* ── HERO ───────────────────────────────────────────────────── */
     .hero {
-      padding: 110px 0 90px;
+      padding: 110px 0 60px;
       text-align: center;
       position: relative;
     }
@@ -770,14 +770,12 @@
 </head>
 <body>
 
-  <!-- AMBIENT BACKGROUND -->
   <div class="bg-orbs" aria-hidden="true">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
   </div>
 
-  <!-- NAVIGATION -->
   <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
@@ -802,11 +800,9 @@
     <a href="directory.html">Open Hub →</a>
   </div>
 
-  <!-- MAIN CONTENT -->
   <main>
     <div class="site-wrapper">
 
-      <!-- HERO -->
       <section class="hero">
         <div class="hero-eyebrow">Platform Online — All Systems Active</div>
         <h1 class="hero-headline">
@@ -827,7 +823,6 @@
           </a>
         </div>
 
-        <!-- STATS -->
         <div class="stats-strip">
           <div class="stat-item">
             <div class="stat-number">100</div>
@@ -848,7 +843,25 @@
         </div>
       </section>
 
-      <!-- TOOLS SECTION -->
+      <section class="reveal" style="padding: 10px 0 60px; display: flex; justify-content: center; position: relative; z-index: 10;">
+        <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: var(--blur-glass); -webkit-backdrop-filter: var(--blur-glass); padding: 40px; border-radius: var(--radius-lg); max-width: 450px; width: 100%; text-align: center; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
+          <h3 style="margin-bottom: 12px; font-size: 22px; font-weight: 800; color: var(--text-primary);">Nexus Identity Verification</h3>
+          <p style="color: var(--text-secondary); font-size: 13.5px; margin-bottom: 24px;">Enter your email to sync terminal authorization configs.</p>
+          
+          <form id="loginForm" style="display: flex; flex-direction: column; gap: 16px;">
+            <input type="email" id="userEmail" placeholder="name@domain.com" required 
+              style="width: 100%; padding: 14px 20px; background: rgba(2, 6, 23, 0.6); border: 1px solid var(--glass-border); border-radius: var(--radius-md); color: var(--text-primary); font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s;" 
+              onfocus="this.style.borderColor='var(--cyan)'" onblur="this.style.borderColor='var(--glass-border)'"/>
+            
+            <button type="submit" class="btn-primary" style="justify-content: center; width: 100%; border-radius: var(--radius-md); padding: 14px; cursor: pointer;">
+              Authorize Terminal
+            </button>
+          </form>
+
+          <div id="authStatus" style="margin-top: 20px; font-size: 13.5px; font-weight: 600; display: none; padding: 12px; border-radius: var(--radius-sm);"></div>
+        </div>
+      </section>
+
       <section class="tools-section reveal" id="tools">
         <div class="section-header">
           <div class="section-eyebrow">// Core Tooling Suite</div>
@@ -858,7 +871,6 @@
 
         <div class="tools-grid">
 
-          <!-- Auto Clicker -->
           <div class="tool-card reveal">
             <div class="upcoming-badge">Upcoming</div>
             <div class="tool-icon tool-icon-ac">⚡</div>
@@ -871,7 +883,6 @@
             </div>
           </div>
 
-          <!-- External -->
           <div class="tool-card reveal">
             <div class="upcoming-badge">Upcoming</div>
             <div class="tool-icon tool-icon-ex">🔗</div>
@@ -884,7 +895,6 @@
             </div>
           </div>
 
-          <!-- Executor -->
           <div class="tool-card reveal">
             <div class="upcoming-badge">Upcoming</div>
             <div class="tool-icon tool-icon-xe">⚙️</div>
@@ -897,7 +907,6 @@
             </div>
           </div>
 
-          <!-- Scripts -->
           <div class="tool-card reveal">
             <div class="upcoming-badge">Upcoming</div>
             <div class="tool-icon tool-icon-sc">📦</div>
@@ -913,7 +922,6 @@
         </div>
       </section>
 
-      <!-- DIRECTORY TEASER -->
       <section class="directory-section reveal">
         <div class="dir-card">
           <div class="dir-card-glow"></div>
@@ -945,7 +953,6 @@
         </div>
       </section>
 
-      <!-- ABOUT STRIP -->
       <section class="about-section reveal" id="about">
         <div class="section-header">
           <div class="section-eyebrow">// Platform Architecture</div>
@@ -975,191 +982,145 @@
         </div>
       </section>
 
-    </div><!-- /site-wrapper -->
+    </div>
   </main>
 
-  <!-- FOOTER -->
   <footer>
-    <div class="site-wrapper">
-      <div class="footer-logo">Freya's <span>Nexus Hub</span></div>
-      <div class="footer-sub">All-In-One Platform</div>
-      <ul class="footer-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="directory.html">Directory</a></li>
-        <li><a href="#tools">Tools</a></li>
-        <li><a href="#about">About</a></li>
-      </ul>
-      <div class="footer-copy">© 2025 Freya's Nexus Hub. Engineered from scratch.</div>
-    </div>
+    <div class="footer-logo">Freya's <span>Nexus</span></div>
+    <div class="footer-sub">All Systems Operational</div>
+    <ul class="footer-links">
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="directory.html">Directory</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <div class="footer-copy">&copy; 2026 Freya's Nexus Hub. Engineered Core Portfolio.</div>
   </footer>
 
   <script>
-    // ── MOBILE MENU ──────────────────────────────────────────────
-    const hamburger   = document.getElementById('hamburger');
-    const mobileMenu  = document.getElementById('mobileMenu');
+    // 1. Generates a unique browser HWID fingerprint
+    function generateBrowserHWID() {
+      const traits = [
+        navigator.userAgent,
+        navigator.language,
+        screen.colorDepth,
+        screen.width + 'x' + screen.height,
+        new Date().getTimezoneOffset()
+      ].join('||');
+      
+      let hash = 0;
+      for (let i = 0; i < traits.length; i++) {
+        const char = traits.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash |= 0; 
+      }
+      return "NX-HWID-" + Math.abs(hash).toString(16).toUpperCase();
+    }
 
+    // 2. Generates a random secure license key
+    function generateLicenseKey() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let segments = [];
+      for (let i = 0; i < 3; i++) {
+        let segment = '';
+        for (let j = 0; j < 4; j++) {
+          segment += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        segments.push(segment);
+      }
+      return "NEXUS-" + segments.join('-');
+    }
+
+    // 3. Form Submission Handler wired directly to Web3Forms
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const emailInput = document.getElementById('userEmail').value.trim().toLowerCase();
+      const statusBox = document.getElementById('authStatus');
+      
+      statusBox.style.display = "block";
+      statusBox.style.background = "rgba(0, 240, 255, 0.05)";
+      statusBox.style.border = "1px solid var(--cyan)";
+      statusBox.style.color = "var(--cyan)";
+      statusBox.innerHTML = "Processing telemetry & compiling security keys...";
+
+      try {
+        // Fetch user public IP address
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipResponse.json();
+        const userIP = ipData.ip;
+
+        // Compile custom telemetry keys
+        const userHWID = generateBrowserHWID();
+        const generatedKey = generateLicenseKey();
+
+        // Linked directly to your customized Web3Forms endpoint
+        const web3FormsToken = "e9b6e48e-f079-45c9-8fac-92d6b478200d";
+
+        // Append custom layout keys to mail template
+        const formData = new FormData();
+        formData.append("access_key", web3FormsToken);
+        formData.append("subject", `New Terminal Access Key Issued for ${emailInput}`);
+        formData.append("Target User Email", emailInput);
+        formData.append("Assigned License Key", generatedKey);
+        formData.append("Device IP Address", userIP);
+        formData.append("Device HWID Fingerprint", userHWID);
+
+        // Deliver payload via fetch request
+        const emailResponse = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        });
+
+        const emailResult = await emailResponse.json();
+
+        if (emailResult.success) {
+          // Grant passing permission inside window storage
+          localStorage.setItem('nexus_session_token', generatedKey);
+
+          statusBox.style.background = "rgba(16, 185, 129, 0.15)";
+          statusBox.style.border = "1px solid #10b981";
+          statusBox.style.color = "#34d399";
+          statusBox.innerHTML = `✔ Key Generated! Check your email inbox. Redirecting terminal...`;
+
+          // Automatic safe dashboard forward
+          setTimeout(() => {
+            window.location.href = "directory.html";
+          }, 2500);
+        } else {
+          throw new Error("API rejection");
+        }
+
+      } catch (error) {
+        statusBox.style.background = "rgba(239, 68, 68, 0.15)";
+        statusBox.style.border = "1px solid #ef4444";
+        statusBox.style.color = "#f87171";
+        statusBox.innerHTML = "Dispatch failed. Serverless communication terminal link offline.";
+      }
+    });
+
+    /* ── USER INTERACTION & LAYOUT RESPONSES ────────────────────── */
+    // Hamburger Mobile Menu Logic
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
     hamburger.addEventListener('click', () => {
       mobileMenu.classList.toggle('open');
-      const spans = hamburger.querySelectorAll('span');
-      const isOpen = mobileMenu.classList.contains('open');
-      spans[0].style.transform = isOpen ? 'translateY(7px) rotate(45deg)'  : '';
-      spans[1].style.opacity   = isOpen ? '0' : '1';
-      spans[2].style.transform = isOpen ? 'translateY(-7px) rotate(-45deg)' : '';
+      hamburger.classList.toggle('active');
     });
 
-    // Close mobile menu on link click
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        const spans = hamburger.querySelectorAll('span');
-        spans[0].style.transform = '';
-        spans[1].style.opacity   = '1';
-        spans[2].style.transform = '';
-      });
-    });
-
-    // ── SCROLL REVEAL ────────────────────────────────────────────
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, 80);
-          revealObserver.unobserve(entry.target);
+    // Clean Scroll Reveal Engine
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+      for (let i = 0; i < revealElements.length; i++) {
+        const windowHeight = window.innerHeight;
+        const elementTop = revealElements[i].getBoundingClientRect().top;
+        const revealPoint = 50;
+        if (elementTop < windowHeight - revealPoint) {
+          revealElements[i].classList.add('visible');
         }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // ── STAGGERED TOOL CARDS ─────────────────────────────────────
-    const cardObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const cards = entry.target.querySelectorAll('.tool-card.reveal');
-          cards.forEach((card, i) => {
-            setTimeout(() => card.classList.add('visible'), i * 110);
-          });
-          cardObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05 });
-
-    const toolsGrid = document.querySelector('.tools-grid');
-    if (toolsGrid) cardObserver.observe(toolsGrid);
-
-    // ── DIR MINI TABS ANIMATION ───────────────────────────────────
-    const miniTabs = document.querySelectorAll('.dir-mini-tab');
-    let litIndex = [0, 2, 5];
-    setInterval(() => {
-      miniTabs.forEach(t => t.classList.remove('lit'));
-      // rotate one random tab
-      const next = Math.floor(Math.random() * miniTabs.length);
-      litIndex.push(next);
-      if (litIndex.length > 3) litIndex.shift();
-      litIndex.forEach(i => { if (miniTabs[i]) miniTabs[i].classList.add('lit'); });
-    }, 1800);
+      }
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll); // Fire instantly on boot
   </script>
 </body>
 </html>
-<script>
-  // 1. Generates a unique browser HWID fingerprint
-  function generateBrowserHWID() {
-    const traits = [
-      navigator.userAgent,
-      navigator.language,
-      screen.colorDepth,
-      screen.width + 'x' + screen.height,
-      new Date().getTimezoneOffset()
-    ].join('||');
-    
-    let hash = 0;
-    for (let i = 0; i < traits.length; i++) {
-      const char = traits.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash |= 0; 
-    }
-    return "NX-HWID-" + Math.abs(hash).toString(16).toUpperCase();
-  }
-
-  // 2. Generates a random secure license key
-  function generateLicenseKey() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let segments = [];
-    for (let i = 0; i < 3; i++) {
-      let segment = '';
-      for (let j = 0; j < 4; j++) {
-        segment += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      segments.push(segment);
-    }
-    return "NEXUS-" + segments.join('-'); // Returns format: NEXUS-XXXX-XXXX-XXXX
-  }
-
-  document.getElementById('loginForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const emailInput = document.getElementById('userEmail').value.trim().toLowerCase();
-    const statusBox = document.getElementById('authStatus');
-    
-    statusBox.style.display = "block";
-    statusBox.style.background = "rgba(0, 240, 255, 0.05)";
-    statusBox.style.border = "1px solid var(--cyan)";
-    statusBox.style.color = "var(--cyan)";
-    statusBox.innerHTML = "Processing telemetry & compiling security keys...";
-
-    try {
-      // Fetch public IP address
-      const ipResponse = await fetch('https://api.ipify.org?format=json');
-      const ipData = await ipResponse.json();
-      const userIP = ipData.ip;
-
-      // Compile HWID and uniquely generated Key
-      const userHWID = generateBrowserHWID();
-      const generatedKey = generateLicenseKey();
-
-      // PASTE YOUR WEB3FORMS ACCESS TOKEN INSIDE THE QUOTES BELOW
-      const web3FormsToken = "e9b6e48e-f079-45c9-8fac-92d6b478200d";
-
-      // Package everything into a payload to dispatch via email
-      const formData = new FormData();
-      formData.append("access_key", web3FormsToken);
-      formData.append("subject", `New Terminal Access Key Issued for ${emailInput}`);
-      formData.append("Target User Email", emailInput);
-      formData.append("Assigned License Key", generatedKey);
-      formData.append("Device IP Address", userIP);
-      formData.append("Device HWID Fingerprint", userHWID);
-
-      // Send the data to the email server API
-      const emailResponse = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData
-      });
-
-      const emailResult = await emailResponse.json();
-
-      if (emailResult.success) {
-        // Log the local session token so directory.html lets them pass through
-        localStorage.setItem('nexus_session_token', generatedKey);
-
-        statusBox.style.background = "rgba(16, 185, 129, 0.15)";
-        statusBox.style.border = "1px solid #10b981";
-        statusBox.style.color = "#34d399";
-        statusBox.innerHTML = `✔ Key Generated! Check your email inbox. Redirecting terminal...`;
-
-        // Automatically send them to the directory page after 2.5 seconds
-        setTimeout(() => {
-          window.location.href = "directory.html";
-        }, 2500);
-      } else {
-        throw new Error("API rejection");
-      }
-
-    } catch (error) {
-      statusBox.style.background = "rgba(239, 68, 68, 0.15)";
-      statusBox.style.border = "1px solid #ef4444";
-      statusBox.style.color = "#f87171";
-      statusBox.innerHTML = "Dispatch failed. Serverless communication terminal link offline.";
-    }
-  });
-</script>
