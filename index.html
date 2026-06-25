@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freya's Nexus Hub</title>
     <style>
-        /* Base Setup & Fluid Layout Mechanics */
         * {
             margin: 0;
             padding: 0;
@@ -15,12 +14,12 @@
         }
 
         :root {
-            --bg-base: #040817;
-            --pink-neon: #ff2a85;
-            --gold-bright: #f3b043;
-            --blue-electric: #00f0ff;
+            --bg-base: #020617;
+            --blue-neon: #00f0ff;
+            --blue-deep: #1d4ed8;
+            --blue-royal: #3b82f6;
             --text-pure: #ffffff;
-            --text-dim: #64748b;
+            --text-dim: #94a3b8;
             --glass-panel: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 255, 255, 0.05);
             --transition-fluid: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -33,17 +32,17 @@
             position: relative;
         }
 
-        /* Ambient Fluid Glow Background Orbs */
+        /* Deep Ambient Blue Neon Glow Layers */
         .ambient-orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(160px);
-            opacity: 0.18;
+            filter: blur(150px);
+            opacity: 0.2;
             z-index: 0;
             pointer-events: none;
         }
-        .orb-1 { top: -20%; left: -10%; width: 600px; height: 600px; background: var(--pink-neon); }
-        .orb-2 { bottom: -20%; right: -10%; width: 700px; height: 700px; background: var(--gold-bright); }
+        .orb-1 { top: -20%; left: -10%; width: 600px; height: 600px; background: var(--blue-neon); }
+        .orb-2 { bottom: -20%; right: -10%; width: 600px; height: 600px; background: var(--blue-deep); }
 
         /* Premium Curved Pill Top Navigation Bar */
         .top-navbar {
@@ -51,13 +50,14 @@
             top: 24px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(10, 17, 40, 0.4);
+            background: rgba(15, 23, 42, 0.6);
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             padding: 8px 12px;
-            border-radius: 100px; /* Forces the capsule/circle edge design */
+            border-radius: 100px;
             display: flex;
+            align-items: center;
             gap: 8px;
             z-index: 1000;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
@@ -69,25 +69,53 @@
             font-size: 0.95rem;
             font-weight: 500;
             padding: 10px 24px;
-            border-radius: 100px; /* Matching pill tabs */
+            border-radius: 100px;
             transition: var(--transition-fluid);
-            letter-spacing: 0.3px;
         }
 
         .nav-tab:hover {
             background: rgba(255, 255, 255, 0.06);
-            color: var(--blue-electric);
+            color: var(--blue-neon);
         }
 
-        /* Active tab state showcasing pink-to-gold premium gradient */
         .nav-tab.active {
-            background: linear-gradient(135deg, var(--pink-neon), var(--gold-bright));
-            color: var(--bg-base);
+            background: linear-gradient(135deg, var(--blue-neon), var(--blue-deep));
+            color: #ffffff;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(255, 42, 133, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.25);
         }
 
-        /* Structural Content Layout segments */
+        /* Seamless Music Module Setup */
+        .audio-widget {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-left: 12px;
+            border-left: 1px solid var(--glass-border);
+            margin-left: 4px;
+        }
+
+        .audio-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-pure);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            transition: var(--transition-fluid);
+        }
+
+        .audio-btn:hover {
+            background: var(--blue-neon);
+            color: var(--bg-base);
+        }
+
+        /* Page Layout Structural Layout Rules */
         section {
             min-height: 100vh;
             width: 100%;
@@ -100,13 +128,13 @@
             z-index: 1;
         }
 
-        /* --- SECTION 1: HOMEPAGE INTRO --- */
-        .hero-center {
+        .content-container {
             text-align: center;
             max-width: 800px;
+            width: 100%;
         }
 
-        .hero-center h1 {
+        h1 {
             font-size: 4rem;
             font-weight: 900;
             letter-spacing: -2px;
@@ -114,26 +142,27 @@
             line-height: 1.1;
         }
 
-        .gradient-brand {
-            background: linear-gradient(135deg, var(--pink-neon) 0%, #d946ef 50%, var(--gold-bright) 100%);
+        .gradient-blue {
+            background: linear-gradient(135deg, var(--blue-neon) 0%, var(--blue-royal) 50%, var(--blue-deep) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-center p {
+        p {
             color: var(--text-dim);
             font-size: 1.2rem;
             margin-bottom: 3rem;
+            line-height: 1.6;
         }
 
-        /* Central Redirect Portal Button */
+        /* Core Redirect Launch System Anchor */
         .directory-launcher {
             display: inline-flex;
             align-items: center;
             gap: 12px;
             background: var(--glass-panel);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 18px 36px;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            padding: 18px 38px;
             border-radius: 100px;
             color: var(--text-pure);
             text-decoration: none;
@@ -142,168 +171,134 @@
             letter-spacing: 0.5px;
             backdrop-filter: blur(10px);
             transition: var(--transition-fluid);
-            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.05);
         }
 
         .directory-launcher:hover {
             transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--pink-neon);
-            box-shadow: 0 15px 30px rgba(255, 42, 133, 0.15), 0 0 20px rgba(243, 176, 67, 0.1);
+            background: rgba(0, 240, 255, 0.05);
+            border-color: var(--blue-neon);
+            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.15);
         }
 
-        .directory-launcher span {
-            font-size: 1.3rem;
-            transition: transform 0.3s ease;
-        }
-
-        .directory-launcher:hover span {
-            transform: translateY(4px);
-        }
-
-        /* --- SECTION 2: THE INFINITE DIRECTORY --- */
-        #directory {
-            background: rgba(3, 5, 13, 0.6);
-            backdrop-filter: blur(40px);
+        /* --- ABOUT ME SECTION UI PANEL --- */
+        #about {
+            background: rgba(3, 7, 22, 0.4);
             border-top: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
         }
 
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 3rem;
-            text-align: center;
-            letter-spacing: -0.5px;
-        }
-
-        /* Horizontal/Vertical Smooth Scroll Panel container */
-        .subject-scroller {
-            width: 100%;
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            padding: 10px;
-        }
-
-        /* High-Tier Directory Subject Layout Block */
-        .subject-panel {
+        .about-card {
             background: var(--glass-panel);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 2.5rem;
-            position: relative;
-            transition: var(--transition-fluid);
+            padding: 3rem;
+            text-align: left;
+            margin-top: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
-        .subject-panel:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.04);
-            transform: translateY(-6px);
-        }
-
-        .subject-badge {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .about-card h2 {
+            font-size: 2.2rem;
             margin-bottom: 1.5rem;
+            letter-spacing: -1px;
         }
 
-        .badge-chat { background: rgba(0, 240, 255, 0.1); color: var(--blue-electric); }
-        .badge-apps { background: rgba(255, 42, 133, 0.1); color: var(--pink-neon); }
-        .badge-vault { background: rgba(243, 176, 67, 0.1); color: var(--gold-bright); }
-
-        .subject-panel h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
         }
 
-        .subject-panel p {
-            color: #94a3b8;
+        .trait-box {
+            background: rgba(255,255,255,0.01);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
+
+        .trait-box h4 {
+            color: var(--blue-neon);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .trait-box p {
             font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Preview elements simulating real actions */
-        .mock-chat-box {
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            padding: 12px;
-            font-size: 0.85rem;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
-
-        .chat-line { margin-bottom: 6px; color: #cbd5e1; }
-        .chat-line span { color: var(--blue-electric); font-weight: 600; }
-
-        /* Status indicators for upcoming products */
-        .app-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--gold-bright);
-        }
-        
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--gold-bright);
-            border-radius: 50%;
-            animation: blink 1.5s infinite ease-in-out;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+            margin-bottom: 0;
         }
 
         @media (max-width: 768px) {
-            .top-navbar { width: 90%; justify-content: center; }
-            .nav-tab { padding: 8px 16px; font-size: 0.85rem; }
-            .hero-center h1 { font-size: 2.8rem; }
+            .top-navbar { width: 92%; justify-content: space-between; padding: 6px 10px; }
+            .nav-tab { padding: 8px 14px; font-size: 0.85rem; }
+            h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Ambient Visual Environment Background layers -->
     <div class="ambient-orb orb-1"></div>
     <div class="ambient-orb orb-2"></div>
 
-    <!-- Capsule Nav Bar at Top -->
+    <!-- Circle Pill Top Navbar with Integrated Audio Controller -->
     <nav class="top-navbar">
         <a href="#home" class="nav-tab active">Home</a>
-        <a href="#directory" class="nav-tab">Directory</a>
-        <a href="#about" class="nav-tab">About Hub</a>
+        <a href="directory.html" class="nav-tab">Directory</a>
+        <a href="#about" class="nav-tab">About Me</a>
+        <div class="audio-widget">
+            <button class="audio-btn" id="musicToggle" title="Play Ambient Mix">▶</button>
+        </div>
     </nav>
 
-    <!-- SECTION 1: HOMEPAGE START -->
+    <!-- SECTION 1: MAIN HOMEPAGE CONTENT -->
     <section id="home">
-        <div class="hero-center">
-            <h1>Welcome to <span class="gradient-brand">Freya's</span> Nexus</h1>
-            <p>An experimental, high-performance web platform designed to host custom utilities, active asset libraries, and open channel communications.</p>
+        <div class="content-container">
+            <h1>Welcome to <span class="gradient-blue">Freya's</span> Nexus</h1>
+            <p>A precision-engineered digital workspace built to run standalone apps, macro scripts, and custom isolated communication networks.</p>
             
-            <!-- Central Redirect Module -->
-            <a href="#directory" class="directory-launcher">
-                Explore Hub Directory <span>↓</span>
+            <!-- Real Multi-File Redirect Endpoint Link -->
+            <a href="directory.html" class="directory-launcher">
+                Enter Main Directory ➔
             </a>
         </div>
     </section>
 
-    <!-- SECTION 2: THE SUBJECTS & APP DIRECTORY -->
-    <section id="directory">
-        <h2 class="section-title">Central Hub Directory</h2>
+    <!-- SECTION 2: BUILT-IN ABOUT ME SPACE -->
+    <section id="about">
+        <div class="content-container" style="max-width: 900px;">
+            <div class="about-card">
+                <h2>About <span class="gradient-blue">The Developer</span></h2>
+                <p style="text-align: left; margin-bottom: 0;">Hi, I'm Freya. I design high-performance web systems and frontend user interfaces. This platform serves as my decentralized environment for testing automation software modules, curating raw resources, and implementing clean code blueprints.</p>
+                
+                <div class="about-grid">
+                    <div class="trait-box">
+                        <h4>Core Focus</h4>
+                        <p>Web Tools & Client Scripts</p>
+                    </div>
+                    <div class="trait-box">
+                        <h4>Aesthetic</h4>
+                        <p>High-End Blue Neon Glassmorphism</p>
+                    </div>
+                    <div class="trait-box">
+                        <h4>Active Projects</h4>
+                        <p>Autoclicker Engine & Isolated Subject Chats</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Streaming Logic Script Layer -->
+    <audio id="bgMusic" loop preload="auto">
+        <!-- Relaxing royalty-free synthwave stream directly safely pulled via archive web node -->
+        <source src="https://archive.org" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const btn = document.getElementById('musicToggle');
         
-        <div class="subject-scroller">
-            
-            <!-- Subject Column 1: Chat Network -->
-            <div class="subject-panel">
-                <div class="subject-badge badge-chat">Network Channel</div>
-                <h3>Community Chats</h3>
+        // Volume ceiling protection
+        audio.volume = 0.25;
+
