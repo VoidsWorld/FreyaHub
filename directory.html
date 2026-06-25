@@ -1,383 +1,99 @@
-<div class="chat-render-viewport" id="dom-terminal-chat-scroller">
-                        <div class="msg-packet-line ai-node">
-                            <div class="avatar-frame-circle">AI</div>
-                            <div>
-                                <div class="bubble-body-content">
-                                    System runtime initialized successfully. Ready to compute target analytical sequences or evaluate sub-channel distributions.
-                                </div>
-                                <span class="bubble-time-ticker">00:00:01</span>
-                            </div>
-                        </div>
-                    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOID // Expanded Directory</title>
+    <style>
+        /* Shared CSS Variables */
+        :root {
+            --bg-void: #050508;
+            --bg-surface: #0f0c1b;
+            --border-dim: #221936;
+            --accent-neo: #bc13fe;
+            --text-main: #f1edfa;
+            --text-muted: #6d5f8a;
+            --font-mono: 'Courier New', Courier, monospace;
+            --font-sans: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
-                    <footer class="terminal-input-bar-dock">
-                        <div class="dock-telemetry-row">
-                            <div class="telemetry-pulse-group">
-                                <div class="pulse-dot-indicator"></div>
-                                <span>CHANNEL_UPLINK_SECURE</span>
-                            </div>
-                            <div>
-                                <span id="telemetry-char-counter">0 / 2048 CHR</span>
-                            </div>
-                        </div>
-                        <form class="console-interactive-form" id="dom-central-input-form-hook" onsubmit="handleCentralConsoleDispatch(event)">
-                            <input type="text" id="terminal-input-live-field" class="input-text-control-field" placeholder="Input control vector string data..." autocomplete="off" oninput="updateTelemetryCharacterMetric(this.value)">
-                            <button type="submit" class="btn-dispatch-submit" title="Dispatch Control Vector">
-                                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 2 2"></polygon></svg>
-                            </button>
-                        </form>
-                    </footer>
-                </div>
-            </section>
+        body { background-color: var(--bg-void); color: var(--text-main); font-family: var(--font-sans); margin: 0; padding: 20px; display: none; }
+        
+        header { border-bottom: 1px solid var(--border-dim); padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+        h1 { font-family: var(--font-mono); margin: 0; color: var(--accent-neo); }
+        .back-link { color: var(--text-muted); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; }
+        .back-link:hover { color: var(--text-main); }
+        
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .data-card { background: var(--bg-surface); border: 1px solid var(--border-dim); padding: 20px; border-radius: 4px; transition: border-color 0.3s; }
+        .data-card:hover { border-color: var(--accent-neo); box-shadow: 0 0 15px rgba(161, 36, 255, 0.1); }
+        .card-header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid var(--border-dim); padding-bottom: 10px; }
+        .card-id { color: var(--accent-neo); font-family: var(--font-mono); }
+        
+        #security-overlay { position: fixed; inset: 0; background: var(--bg-void); display: flex; align-items: center; justify-content: center; z-index: 1000; flex-direction: column; }
+        #security-overlay h2 { font-family: var(--font-mono); color: #ff0055; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
 
-            <aside class="panel-sidebar-root sidebar-right-channels" id="dom-right-sidebar-drawer">
-                <nav class="tab-navigator-deck">
-                    <div class="tab-trigger-node is-active-tab-panel" id="tab-trigger-users" onclick="toggleActiveRightSidebarTab('users')">Users</div>
-                    <div class="tab-trigger-node" id="tab-trigger-public" onclick="toggleActiveRightSidebarTab('public')">Public Feed</div>
-                </nav>
-
-                <div class="tab-viewports-container">
-                    <div class="viewport-stream-view is-visible-view" id="panel-viewport-users">
-                        <div class="tab-stream-scroller" id="dom-users-stream-container">
-                            <div class="users-only-packet-card">
-                                <div class="users-only-card-header">
-                                    <span class="users-only-handle">Nexus_Alpha</span>
-                                    <span class="users-only-time">16:51</span>
-                                </div>
-                                <p class="users-only-msg-body">Sentential sequence mapping parameters have shifted within local matrix sectors.</p>
-                            </div>
-                        </div>
-                        <footer class="sidebar-embedded-input-tray">
-                            <form class="sidebar-embedded-input-form" onsubmit="handleSidebarStreamDispatch(event, 'users')">
-                                <input type="text" id="sidebar-input-users-field" class="sidebar-embedded-input-control" placeholder="Direct message user mesh..." autocomplete="off">
-                                <button type="submit" class="sidebar-embedded-submit-btn">Send</button>
-                            </form>
-                        </footer>
-                    </div>
-
-                    <div class="viewport-stream-view" id="panel-viewport-public">
-                        <div class="tab-stream-scroller" id="dom-public-stream-container">
-                            <div class="public-feed-packet-row">
-                                <span class="public-feed-sender-tag">[SYSTEM_BROADCAST]</span>
-                                <p class="public-feed-text-data">Global cluster node verification is pending for standard sector arrays.</p>
-                            </div>
-                        </div>
-                        <footer class="sidebar-embedded-input-tray">
-                            <form class="sidebar-embedded-input-form" onsubmit="handleSidebarStreamDispatch(event, 'public')">
-                                <input type="text" id="sidebar-input-public-field" class="sidebar-embedded-input-control" placeholder="Broadcast to system matrix..." autocomplete="off">
-                                <button type="submit" class="sidebar-embedded-submit-btn">Broadcast</button>
-                            </form>
-                        </footer>
-                    </div>
-                </div>
-            </aside>
-
-        </div>
+    <div id="security-overlay">
+        <h2>UNAUTHORIZED ACCESS DETECTED</h2>
+        <p>Session token missing. Redirecting to gateway...</p>
     </div>
 
+    <header>
+        <div>
+            <h1>MATRIX DIRECTORY</h1>
+            <div id="auth-display" style="font-family: monospace; color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;"></div>
+        </div>
+        <a href="index.html" class="back-link">← Return to Core Console</a>
+    </header>
+
+    <div class="grid-container" id="full-directory">
+        </div>
+
     <script>
-        // Memory Cache State Management Architecture
-        let activeSelectedContextId = null;
-        let platformAudioPlaybackState = false;
-        const NativeAudioInstance = document.getElementById('native-audio-node-instance');
-
-        // Abstracted Dictionary Categorization Models
-        const structuralMatrixCategories = [
-            "Analytical Tensors", "Quantum Mechanics", "Data Topologies", 
-            "Neural Configurations", "Cryptographic Strings", "Heuristic Optimization"
-        ];
-
-        // 1. Initial Launch Sequencer Execution
-        document.addEventListener('DOMContentLoaded', () => {
-            generateLocalizedDictionaryNodes();
-            initializeLiveDirectoryFilterPipeline();
-        });
-
-        // 2. Localized Dynamic Matrix Row Generator (Populates 100 Context Cells)
-        function generateLocalizedDictionaryNodes() {
-            const directoryContainer = document.getElementById('dom-directory-injection-viewport');
-            directoryContainer.innerHTML = '';
-
-            let allocatedCellCount = 0;
-            const targetTotalNodes = 100;
-
-            structuralMatrixCategories.forEach((categoryTitle, index) => {
-                if (allocatedCellCount >= targetTotalNodes) return;
-
-                const groupWrapper = document.createElement('div');
-                groupWrapper.className = 'category-group-wrapper';
-
-                const headingNode = document.createElement('div');
-                headingNode.className = 'category-label-node';
-                headingNode.textContent = categoryTitle;
-                groupWrapper.appendChild(headingNode);
-
-                // Dynamically balance sub-branches evenly up to 100 items
-                const maxSubBranches = (index === structuralMatrixCategories.length - 1) 
-                    ? (targetTotalNodes - allocatedCellCount) 
-                    : Math.ceil(targetTotalNodes / structuralMatrixCategories.length);
-
-                for (let b = 1; b <= maxSubBranches; b++) {
-                    allocatedCellCount++;
-                    if (allocatedCellCount > targetTotalNodes) break;
-
-                    const formalIdString = String(allocatedCellCount).padStart(3, '0');
-                    const simulatedName = `${categoryTitle.split(' ')[0]} Block ${b}`;
-
-                    const interactiveButton = document.createElement('button');
-                    interactiveButton.className = 'directory-row-anchor';
-                    interactiveButton.id = `matrix-cell-node-${formalIdString}`;
-                    interactiveButton.setAttribute('data-search-payload', `${simulatedName} ${categoryTitle}`.toLowerCase());
-                    interactiveButton.onclick = () => mountAnalyticalContextWorkspace(formalIdString, simulatedName, categoryTitle);
-
-                    interactiveButton.innerHTML = `
-                        <span>${simulatedName}</span>
-                        <span class="mono-id-tag">M_${formalIdString}</span>
-                    `;
-                    groupWrapper.appendChild(interactiveButton);
-                }
-                directoryContainer.appendChild(groupWrapper);
-            });
-        }
-
-        // 3. Real-Time Directory Search Filter Pipeline Engine
-        function initializeLiveDirectoryFilterPipeline() {
-            const filterInputField = document.getElementById('directory-live-filter-field');
-            filterInputField.addEventListener('input', (e) => {
-                const standardizedQuery = e.target.value.toLowerCase().trim();
-                const interactiveRows = document.querySelectorAll('.directory-row-anchor');
-
-                interactiveRows.forEach(row => {
-                    const comparativePayload = row.getAttribute('data-search-payload');
-                    if (comparativePayload.includes(standardizedQuery)) {
-                        row.style.display = 'flex';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-
-                // Dynamically show/hide parent headings based on children structural footprints
-                const structuralWrappers = document.querySelectorAll('.category-group-wrapper');
-                structuralWrappers.forEach(wrapper => {
-                    const visibleChildren = wrapper.querySelectorAll('.directory-row-anchor[style="display: flex;"]');
-                    const completelyUnfilteredChildren = wrapper.querySelectorAll('.directory-row-anchor[style="display: flex;"]').length === 0 
-                        && wrapper.querySelectorAll('.directory-row-anchor[style]').length === 0;
-                    
-                    if (visibleChildren.length > 0 || completelyUnfilteredChildren) {
-                        wrapper.style.display = 'block';
-                    } else {
-                        wrapper.style.display = 'none';
-                    }
-                });
-            });
-        }
-
-        // 4. Workspace State Transmutation & Mount Layer Interface
-        function mountAnalyticalContextWorkspace(formalId, blockTitle, parentCategory) {
-            // Deselect prior selected structural class frames
-            if (activeSelectedContextId) {
-                const historicalSelectionNode = document.getElementById(`matrix-cell-node-${activeSelectedContextId}`);
-                if (historicalSelectionNode) historicalSelectionNode.classList.remove('is-selected-cell');
-            }
-
-            activeSelectedContextId = formalId;
-            const targetCurrentCellNode = document.getElementById(`matrix-cell-node-${formalId}`);
-            if (targetCurrentCellNode) targetCurrentCellNode.classList.add('is-selected-cell');
-
-            // Extinguish the standby splash presentation graphics layer
-            document.getElementById('dom-standby-canvas-screen').classList.add('extinguished');
-            document.getElementById('dom-active-terminal-environment-frame').classList.add('operational');
-
-            // Map configuration token parameters directly into header nodes
-            document.getElementById('meta-text-active-header-title').textContent = `${formalId}. Matrix Layer Cluster: ${blockTitle}`;
-            document.getElementById('meta-text-active-header-description').textContent = `System architecture partition assigned to ${parentCategory} analytics pipeline infrastructure networks.`;
-
-            // Clear historical messaging structures for simulated initialization context change
-            const chatScroller = document.getElementById('dom-terminal-chat-scroller');
-            chatScroller.innerHTML = `
-                <div class="msg-packet-line ai-node">
-                    <div class="avatar-frame-circle">AI</div>
-                    <div>
-                        <div class="bubble-body-content">
-                            Synchronized context pipeline safely connected onto <strong>M_${formalId}</strong> (${blockTitle}). Ready to evaluate localized terminal processing requests.
-                        </div>
-                        <span class="bubble-time-ticker">${getCurrentSystemClockTimestamp()}</span>
-                    </div>
-                </div>
-            `;
-
-            // Mobile view adjustment: snap directly onto console environment once selected
-            if (window.innerWidth <= 768) {
-                executeMobileSpatialLayerSwitch('console');
-            }
-        }
-
-        // 5. Interactive Chat Pipeline Processing System (Mock Terminal Input Actions)
-        function handleCentralConsoleDispatch(event) {
-            event.preventDefault();
-            const inputField = document.getElementById('terminal-input-live-field');
-            const dataPayloadText = inputField.value.trim();
-            if (!dataPayloadText) return;
-
-            const chatScroller = document.getElementById('dom-terminal-chat-scroller');
-            const targetCurrentTime = getCurrentSystemClockTimestamp();
-
-            // Append User Message Node Bubble
-            const userPacketDiv = document.createElement('div');
-            userPacketDiv.className = 'msg-packet-line user-node';
-            userPacketDiv.innerHTML = `
-                <div class="avatar-frame-circle">UR</div>
-                <div>
-                    <div class="bubble-body-content">${escapeDataStringMarkups(dataPayloadText)}</div>
-                    <span class="bubble-time-ticker">${targetCurrentTime}</span>
-                </div>
-            `;
-            chatScroller.appendChild(userPacketDiv);
+        // Cross-File Security Handshake
+        window.onload = () => {
+            const token = localStorage.getItem('void_session') || sessionStorage.getItem('void_session');
+            const overlay = document.getElementById('security-overlay');
             
-            // Wipe user input cache lines
-            inputField.value = '';
-            document.getElementById('telemetry-char-counter').textContent = "0 / 2048 CHR";
-
-            // Trigger Automatic Simulated System Architecture Core Echo Responses
-            setTimeout(() => {
-                const systemResponsePacketDiv = document.createElement('div');
-                systemResponsePacketDiv.className = 'msg-packet-line ai-node';
-                systemResponsePacketDiv.innerHTML = `
-                    <div class="avatar-frame-circle">AI</div>
-                    <div>
-                        <div class="bubble-body-content">
-                            Processed processing request packet successfully. Vector analysis verified.
-                            <div class="terminal-embedded-code-panel">{\n  "matrix_context": "M_${activeSelectedContextId || '000'}",\n  "telemetry_status": "SUCCESS",\n  "checksum_token": "${Math.random().toString(16).substring(2, 10).toUpperCase()}"\n}</div>
-                        </div>
-                        <span class="bubble-time-ticker">${getCurrentSystemClockTimestamp()}</span>
-                    </div>
-                `;
-                chatScroller.appendChild(systemResponsePacketDiv);
-                chatScroller.scrollTop = chatScroller.scrollHeight;
-            }, 750);
-
-            chatScroller.scrollTop = chatScroller.scrollHeight;
-        }
-
-        // 6. Split Auxiliary Channels Data Stream Handling Engine
-        function handleSidebarStreamDispatch(event, streamTargetKey) {
-            event.preventDefault();
-            const inputField = document.getElementById(`sidebar-input-${streamTargetKey}-field`);
-            const messageBodyText = inputField.value.trim();
-            if (!messageBodyText) return;
-
-            const targetCurrentTime = getCurrentSystemClockTimestamp().substring(0, 5);
-
-            if (streamTargetKey === 'users') {
-                const usersContainer = document.getElementById('dom-users-stream-container');
-                const userCard = document.createElement('div');
-                userCard.className = 'users-only-packet-card';
-                userCard.innerHTML = `
-                    <div class="users-only-card-header">
-                        <span class="users-only-handle">Operator_Mesh</span>
-                        <span class="users-only-time">${targetCurrentTime}</span>
-                    </div>
-                    <p class="users-only-msg-body">${escapeDataStringMarkups(messageBodyText)}</p>
-                `;
-                usersContainer.appendChild(userCard);
-                usersContainer.scrollTop = usersContainer.scrollHeight;
-            } else {
-                const publicContainer = document.getElementById('dom-public-stream-container');
-                const publicRow = document.createElement('div');
-                publicRow.className = 'public-feed-packet-row';
-                publicRow.innerHTML = `
-                    <span class="public-feed-sender-tag">[CONSOLE_USER_${Math.floor(100 + Math.random() * 900)}]</span>
-                    <p class="public-feed-text-data">${escapeDataStringMarkups(messageBodyText)}</p>
-                `;
-                publicContainer.appendChild(publicRow);
-                publicContainer.scrollTop = publicContainer.scrollHeight;
+            if (!token) {
+                setTimeout(() => window.location.href = 'index.html', 2000);
+                return;
             }
 
-            inputField.value = '';
-        }
+            // Authentic Session Discovered
+            const sessionData = JSON.parse(token);
+            document.body.style.display = 'block';
+            overlay.style.display = 'none';
+            document.getElementById('auth-display').innerText = `ACCESS GRANTED // OPR: ${sessionData.user}`;
 
-        // 7. Right Segmented Sidebar Navigation Tab Shifter Control Layout
-        function toggleActiveRightSidebarTab(targetTabKey) {
-            document.getElementById('tab-trigger-users').classList.remove('is-active-tab-panel');
-            document.getElementById('tab-trigger-public').classList.remove('is-active-tab-panel');
-            document.getElementById('panel-viewport-users').classList.remove('is-visible-view');
-            document.getElementById('panel-viewport-public').classList.remove('is-visible-view');
+            // Populate the 100-cell grid layout
+            const categories = ["Analytical Tensors", "Quantum Mechanics", "Data Topologies", "Neural Configurations", "Cryptographic Strings", "Heuristic Optimization"];
+            const container = document.getElementById('full-directory');
+            let html = '';
+            let index = 1;
 
-            if (targetTabKey === 'users') {
-                document.getElementById('tab-trigger-users').classList.add('is-active-tab-panel');
-                document.getElementById('panel-viewport-users').classList.add('is-visible-view');
-            } else {
-                document.getElementById('tab-trigger-public').classList.add('is-active-tab-panel');
-                document.getElementById('panel-viewport-public').classList.add('is-visible-view');
-            }
-        }
-
-        // 8. Responsive Spatial Layout Swapping Layer Control (Mobile Viewports Only)
-        function executeMobileSpatialLayerSwitch(targetSpatialLayerKey) {
-            const leftSidebar = document.getElementById('dom-left-sidebar-drawer');
-            const centerConsole = document.getElementById('dom-center-workspace-panel');
-            const rightSidebar = document.getElementById('dom-right-sidebar-drawer');
-
-            leftSidebar.classList.remove('mobile-active-layer');
-            centerConsole.removeProperty ? centerConsole.classList.remove('mobile-active-layer') : centerConsole.classList.remove('mobile-active-layer');
-            rightSidebar.classList.remove('mobile-active-layer', 'mobile-panel-override-view');
-
-            document.getElementById('hud-nav-sectors').classList.remove('is-active-hud-cell');
-            document.getElementById('hud-nav-console').classList.remove('is-active-hud-cell');
-            document.getElementById('hud-nav-streams').classList.remove('is-active-hud-cell');
-
-            if (targetSpatialLayerKey === 'sectors') {
-                leftSidebar.classList.add('mobile-active-layer');
-                document.getElementById('hud-nav-sectors').classList.add('is-active-hud-cell');
-            } else if (targetSpatialLayerKey === 'console') {
-                centerConsole.classList.add('mobile-active-layer');
-                document.getElementById('hud-nav-console').classList.add('is-active-hud-cell');
-            } else if (targetSpatialLayerKey === 'streams') {
-                rightSidebar.classList.add('mobile-active-layer', 'mobile-panel-override-view');
-                document.getElementById('hud-nav-streams').classList.add('is-active-hud-cell');
-            }
-        }
-
-        // 9. Audio Playback Control Mechanisms
-        function handlePlatformAudioToggle() {
-            const svgIconContainer = document.getElementById('audio-state-svg-icon');
-            if (!platformAudioPlaybackState) {
-                NativeAudioInstance.play().then(() => {
-                    platformAudioPlaybackState = true;
-                    svgIconContainer.innerHTML = `<rect x="4" y="4" width="4" height="16"></rect><rect x="16" y="4" width="4" height="16"></rect>`;
-                }).catch(err => console.log("Audio pipeline hardware tracking blocks: ", err));
-            } else {
-                NativeAudioInstance.pause();
-                platformAudioPlaybackState = false;
-                svgIconContainer.innerHTML = `<polygon points="5 3 19 12 5 21 5 3"></polygon>`;
-            }
-        }
-
-        function handleAudioVolumeCalibration(targetVolumeValue) {
-            if (NativeAudioInstance) {
-                NativeAudioInstance.volume = targetVolumeValue;
-            }
-        }
-
-        // 10. Utilities & Hardware Telemetry Calculators
-        function updateTelemetryCharacterMetric(currentValueString) {
-            const lengthCount = currentValueString.length;
-            document.getElementById('telemetry-char-counter').textContent = `${lengthCount} / 2048 CHR`;
-        }
-
-        function getCurrentSystemClockTimestamp() {
-            const systemTimeObject = new Date();
-            return systemTimeObject.toTimeString().split(' ')[0];
-        }
-
-        function escapeDataStringMarkups(rawStringPayload) {
-            return rawStringPayload
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
+            categories.forEach(cat => {
+                const count = (cat === "Heuristic Optimization") ? 15 : 17;
+                for(let i = 0; i < count; i++) {
+                    const idStr = index.toString().padStart(3, '0');
+                    html += `
+                        <div class="data-card">
+                            <div class="card-header">
+                                <span style="font-weight: bold; font-size: 0.9rem;">${cat}</span>
+                                <span class="card-id">M_${idStr}</span>
+                            </div>
+                            <div style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.5;">
+                                Sector active. Telemetry data streaming normally. Hash validation successful for block parameter ${Math.random().toString(36).substring(7)}.
+                            </div>
+                        </div>`;
+                    index++;
+                }
+            });
+            container.innerHTML = html;
+        };
     </script>
 </body>
 </html>
